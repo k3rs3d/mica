@@ -1,0 +1,20 @@
+</main>
+  
+<footer><center>
+{{ with .Site.Params.jumpToTop }}
+	<p>
+	<a href="#" class="top-link">{{ . }}</a>
+	</p>
+{{ end }}
+
+<p>
+  {{ with .Site.Params.copyright }}
+    Copyright &copy; {{ dateFormat "2006" now }} {{ . }}
+  {{ else }}
+    Copyright &copy; {{ dateFormat "2006" now }} {{ .Site.Title }}
+  {{ end }}
+</p>
+</center></footer>
+
+</body>
+</html>

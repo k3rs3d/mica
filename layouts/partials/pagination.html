@@ -1,0 +1,28 @@
+<center>
+{{ if gt .Paginator.TotalPages 1 }}
+	<div class="window window-dynamic window-content">
+	  <div class="pagination">
+		  {{ if .Paginator.HasPrev }}
+			<a href="{{ .Paginator.Prev.URL }}">←Prev</a>
+		  {{ end }}
+		  
+		  <!-- Separator - (REMOVE???) -->
+		  {{ if .Paginator.HasPrev }}
+			{{ if .Paginator.HasNext }}
+			 ,
+			{{ end }}
+		  {{ end }}
+
+		  {{ if .Paginator.HasNext }}
+			<a href="{{ .Paginator.Next.URL }}">Next→</a>
+		  {{ end }}
+		  
+		  <br>
+		  
+		  {{ range .Paginator.Pagers }}
+			<a href="{{ .URL }}" class="{{ if eq .Paginator . }}active{{end}}">{{ .PageNumber }}</a>
+		  {{ end }}
+	  </div>
+	</div>  
+{{ end }}
+</center>

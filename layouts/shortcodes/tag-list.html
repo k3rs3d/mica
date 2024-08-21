@@ -1,0 +1,23 @@
+{{ $currentSection := .Page.Section }} <!-- Get the section of the current page -->
+{{ $allTags := .Site.Taxonomies.tags }} <!-- All tags -->
+{{ $filteredTags := slice }} <!-- Filtered tags to be populated -->
+
+{{ range $name, $taxonomy := $allTags }}
+    {{ $tagUsedInSection := false }} <!-- Initialize variable to false -->
+
+    {{ range $taxonomy.Pages }} <!-- Check if the tag exists in any pages of the current section -->
+        {{ if eq .Section $currentSection }}
+            {{ $tagUsedInSection = true }}
+        {{ end }}
+    {{ end }}
+
+    <!-- If tag is used in the section, add it to filteredTags -->
+    {{ if $tagUsedInSection }}
+        {{ $filteredTags = $filteredTags | append (dict "name" $name "count" (len $taxonomy.Pages) "pages" $taxonomy.Pages "permalink" (urlize $name)) }}
+    {{ end }}
+{{ end }}
+
+<h3>Categories</h3>
+{{ range sort $filteredTags ".count" "desc" }}
+   <a href="{{ "/tags/" | relLangURL }}{{ .permalink }}">{{ .name }}</a>
+{{ end }}

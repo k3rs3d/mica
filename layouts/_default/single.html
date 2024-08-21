@@ -1,0 +1,87 @@
+{{ partial "header.html" . }}
+<article class = "post-content">
+<div class="window">
+<div class="window-header"><h1>
+    <!-- <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a> -->
+	{{ .Title | markdownify }}
+  </h1></div>
+  
+  <div class="post-meta">
+  <ul>
+    {{ if .Date }}
+      <time class="post-date">
+        <li>Posted on {{ .Date.Format "2006-01-02" }} 
+		
+		{{ with .Params.author }}
+			by {{ . }}
+		{{ end}}
+	
+      </time>
+	  </li>
+    {{ end }}
+	
+	<!-- USE "lastUpdated" PARAMETER: -->
+	{{ with.Params.lastUpdated }}
+		<li>
+		Last updated {{ . | time.Format "2006-01-02" }}
+		</li>
+	{{ end }}
+  
+  <!-- Reading Time -->
+  {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
+  <li>
+      <span class="post-reading-time"> {{ .ReadingTime }} {{ $.Site.Params.minuteReadingTime | default "min read" }} ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span>
+  </li>
+  {{ end }}
+	
+	{{ if .Params.tags }}
+	<li>
+	Tags: 
+    <span class="post-tags">
+      {{ range .Params.tags }}
+      <a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">#{{ . }}</a>&nbsp;
+      {{ end }}
+    </span>
+	</li>
+  {{ end }}
+</ul>
+</div>
+  
+{{ if (.Params.Toc | default .Site.Params.Toc) }}
+<aside class="table-of-contents">
+<details open>
+	<summary>
+        {{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Contents" }}
+	 </summary>
+      {{ .TableOfContents }}
+	 </details>
+</aside>
+<br>
+{{ end }}
+</div> <!-- end first window -->
+
+<div class="window window-content">
+<!-- The actual content! -->
+{{ .Content }}
+</div>
+
+<!-- Next/Previous pages -->
+<div class="window pagination">
+  {{ if eq .Type $.Site.Params.contentTypeName }}
+    {{ partial "posts_pagination.html" . }}
+  {{ end }}
+  
+<!-- Related posts: -->
+{{ $related := .Site.RegularPages.Related . | first 3 }}
+{{ with $related }}
+<h3>Related Pages</h3>
+<ul>
+ {{ range . }}
+ <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+ {{ end }}
+</ul>
+{{ end }}
+</div> <!-- end window -->
+</article>
+
+{{ partial "footer.html" . }}

@@ -1,0 +1,32 @@
+{{ partial "header.html" . }}
+
+<h1>{{ .Title }}</h1>
+{{ .Content }}
+
+	<!-- Initialize $allPosts -->
+    {{ $allPosts := slice }}
+    
+    <!-- Check if it's the "all" section and fetch posts accordingly -->
+    {{ if eq .Section "all" }}
+      {{ $allPosts = site.RegularPages.ByDate.Reverse }}
+    {{ else }}
+      {{ $allPosts = .Data.Pages }}
+    {{ end }}
+	
+	<!-- Paginate all posts, including featured posts -->
+    {{ $paginator := .Paginate $allPosts }}
+  
+    <!-- Featured Posts -->
+    {{ range where $paginator.Pages "Params.pinned" "==" true }}
+      {{ partial "post.html" . }}
+	  <hr>
+    {{ end }}
+	
+    <!-- Remaining Posts (Chronological Order) -->
+    {{ range where $paginator.Pages "Params.pinned" "!=" true }}
+      {{ partial "post.html" . }}
+    {{ end }}
+	
+	{{ partial "pagination.html" . }}
+
+{{ partial "footer.html" . }}

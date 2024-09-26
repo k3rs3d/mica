@@ -28,7 +28,8 @@
 	{{ end }}
   
   <!-- Reading Time -->
-  {{ if and (.Param "readingTime") (eq (.Param "readingTime") true) }}
+  {{ $sectionParams := index $.Site.Params .Section }}
+  {{ if and ($sectionParams.showReadingTime | default false) }}
   <li>
       <span class="post-reading-time"> {{ .ReadingTime }} {{ $.Site.Params.minuteReadingTime | default "min read" }} ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span>
   </li>
@@ -47,18 +48,16 @@
 </ul>
 </div>
   
-{{ if (.Params.Toc | default .Site.Params.Toc) }}
-<aside class="table-of-contents">
-<details open>
-	<summary>
-        {{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Contents" }}
-	 </summary>
+{{ if ($sectionParams.toc | default .Site.Params.Toc) }}
+  <aside class="table-of-contents">
+  <details open>
+	<summary>{{ ($sectionParams.TocTitle | default $.Site.Params.TocTitle) | default "Contents" }}</summary>
       {{ .TableOfContents }}
 	 </details>
-</aside>
-<br>
-{{ end }}
-</div> <!-- end first window -->
+  </aside>
+  <br>
+  {{ end }}
+</div>
 
 <div class="window window-content">
 <!-- The actual content! -->
@@ -72,16 +71,20 @@
   {{ end }}
   
 <!-- Related posts: -->
+{{ if ($sectionParams.showRelated | default .Site.Params.showRelated) }}
 {{ $related := .Site.RegularPages.Related . | first 3 }}
-{{ with $related }}
-<h3>Related Pages</h3>
-<ul>
- {{ range . }}
- <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
- {{ end }}
-</ul>
+	{{ with $related }}
+	<h3>Related Pages</h3>
+	<ul>
+		 {{ range . }}
+		 <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+		 {{ end }}
+	</ul>
+	{{ end }}
 {{ end }}
+
 </div> <!-- end window -->
+
 </article>
 
 {{ partial "footer.html" . }}

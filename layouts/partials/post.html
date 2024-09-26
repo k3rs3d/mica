@@ -9,7 +9,7 @@
       <span class="pinned-label">Pinned!</span>
   {{ end }}
   
-  {{ if .Params.showFullContent | default $sectionParams.showRelated }}
+  {{ if $sectionParams.showFullContent | default .Params.showFullContent }}
       {{ .Content }}
     {{ else if .Description }}
       {{ .Description | markdownify }}

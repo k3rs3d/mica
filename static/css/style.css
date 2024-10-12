@@ -136,6 +136,37 @@ pre code {
   margin-right: 1em;
 }
 
+/* TABLES */
+table {
+    width: 100%;
+    border-collapse: collapse; /* no double borders */
+    margin-bottom: 16px;
+}
+
+/* headers */
+th {
+	background-color: #333;
+	font-style: italic;
+    padding: 8px 12px; 
+    border: 1px solid #999; 
+}
+
+/* alternating row color */
+tr:nth-child(even) {
+    background-color: #242424; 
+}
+
+/* cells */
+td { 
+    padding: 8px 12px; 
+    border: 1px solid #999; 
+    text-align: left; 
+}
+
+tr:hover {
+    background-color: #333;
+}
+
 /* STYLING */ 
 /* Pagination styling */
 
@@ -281,6 +312,19 @@ blockquote {
 
 	.spoiler:hover {
 		color: #ffe; /* text becomes background color on hover */
+	}
+	
+	/* lightmode tables */
+	th {
+		background-color: #ddc;
+	}
+	
+	tr:nth-child(even) {
+		background-color: #eed; 
+	}
+	
+	tr:hover {
+		background-color: #ddc;
 	}
 }
 

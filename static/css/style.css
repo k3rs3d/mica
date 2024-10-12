@@ -81,6 +81,9 @@ code {
     border: 1px solid #999;
     border-radius: 2px;
     font-family: 'Courier New', Courier, monospace; 
+	word-wrap: break-word; /* allow long code to break */
+    white-space: pre-wrap; /* respect whitespace */
+    overflow-x: auto; /* add scrollbar if necessary */
 }
 
 code:hover {
@@ -97,9 +100,6 @@ pre code {
 	display: block; 
 	padding: 10px;
     margin: 10px 0;
-	word-wrap: break-word; /* allow long code to break */
-    white-space: pre-wrap; /* respect whitespace */
-    overflow-x: auto; /* add scrollbar if necessary */
 	font-size: 1em;
 }
 
@@ -226,7 +226,16 @@ blockquote {
 	border: 2px dashed #555;
 	margin: 1em;
 	padding: 1em;
-}	  
+}
+
+.spoiler {
+	color: #ffe; /* normal text color */ 
+	background-color: #ffe; /* change background to match text color */
+}	
+
+.spoiler:hover {
+	color: #111; /* text becomes background color on hover */
+}
 
 
 /* For light mode */
@@ -244,6 +253,15 @@ blockquote {
 		color: #f00;
 	}
 	
+	blockquote {
+		background-color: #ddd;
+		border-left: 4px solid #f00;
+	}
+	
+	details {
+		background-color: #ddd;
+	}
+	
 	.site-nav .logo { 
 		color: #222;
 	}
@@ -256,8 +274,13 @@ blockquote {
 		color: #222;
 	}
 	
-	.tags a {
-		color: #666;
+	.spoiler {
+		color: #222; /* normal text color */ 
+		background-color: #222; /* change background to match text color */
+	}	
+
+	.spoiler:hover {
+		color: #ffe; /* text becomes background color on hover */
 	}
 }
 
@@ -267,8 +290,13 @@ blockquote {
 @media screen and (max-width: 45rem) {
   body {
     font-size: 1.2em;
-    padding: 0em;
+    padding: 4px;
 	width: 100%;
+  }
+  
+  img { 
+	max-width: 100%;
+	display: block;
   }
   
   .site-nav,

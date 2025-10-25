@@ -34,6 +34,13 @@
       <span class="post-reading-time"> {{ .ReadingTime }} {{ $.Site.Params.minuteReadingTime | default "min read" }} ({{ .WordCount }} {{ $.Site.Params.words | default "words" }})</span>
   </li>
   {{ end }}
+
+  <!-- Section/Category Name -->
+  {{ if .Section }}
+  <li>
+    Category: <a href="{{ .Site.BaseURL }}{{ .Section }}">/{{ .Section }}/</a>
+  </li>
+  {{ end }}
 	
 	{{ if .Params.tags }}
 	<li>
@@ -47,6 +54,12 @@
   {{ end }}
 </ul>
 </div>
+
+<!-- Cover Image -->
+<!-- TODO: parameterize width? -->
+  {{ if .Params.cover }}
+  <center><img src="{{ .Params.cover }}" alt="{{ .Params.coverAlt }}" class="cover-image" width=600></center>
+  {{ end }}
   
 {{ if ($sectionParams.toc | default .Site.Params.Toc) }}
   <aside class="table-of-contents">
@@ -56,7 +69,7 @@
 	 </details>
   </aside>
   <br>
-  {{ end }}
+{{ end }}
 </div>
 
 <div class="window window-content">

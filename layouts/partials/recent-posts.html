@@ -1,0 +1,12 @@
+<ul class="recent-posts">
+  {{ $recent := ( first 8 ( .Site.RegularPages ) ) }}
+  {{ range $recent }}
+    {{ if .Date }}
+      <li>
+        <span class="post-meta">[{{ .Date.Format "2006-01-02" }}]</span>
+        <a href="{{ .Section }}">{{ with .Section }}{{ . }}{{ end }}</a> /
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </li>
+    {{ end }}
+  {{ end }}
+</ul>
